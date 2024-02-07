@@ -1,18 +1,9 @@
-# This config was automatically generated from your source code
-# Stacks detected: deps:node:.
+# CircleCI configuration file
 version: 2.1
-orbs:
-  node: circleci/node@5
+
 jobs:
-  deploy-job:
-    steps:
-     - add_ssh_keys:
-          fingerprints:
-            - "SHA256:pXR1AMsAuKPh4U7SjJMTD2jkAMJtrOk5ERPWv54x36E"
-workflows:
   build:
-    jobs:
-      - build-node
-    # - deploy:
-    #     requires:
-    #       - build-node
+    docker:
+     - image: cimg/base:2022.05
+    steps:
+        - run: echo "Say hello to YAML!"
