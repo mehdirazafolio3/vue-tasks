@@ -1,24 +1,36 @@
-# CircleCI configuration file
 version: 2.1
-
 jobs:
-  # Job one with a unique name
-  say_hello:
+  build:
     docker:
-     - image: cimg/base:2022.05
+      - image: cimg/node:16.13.2
     steps:
-      - run: echo "Say hello to YAML!"
-  # Job two with a unique name
-  say_goodbye:
+      - checkout
+      - run:
+          command: npm install
+          name: npm install
+      - run:
+          command: npm run build
+          name: npm build
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - .
+  deploy:
     docker:
-     - image: cimg/base:2022.05
+      - image: cimg/base:2021.04
     steps:
-      - run: echo "Say goodbye to YAML!"
-
+      - attach_workspace:
+          at: ~/
+      - add_ssh_keys:
+          fingerprints:
+            - "$SSH_FINGERPRINT"
+      - run:
+          name: ssh
+          command: scp -o StrictHostKeyChecking=no -r dist/* "$SSH_USER@$SSH_HOST:/demoCI"
 workflows:
-  # Name of workflow
-  hello_and_goodbye:
-    # List of jobs that will run
+  build-and-deploy:
     jobs:
-      - say_hello
-      - say_goodbye
+      - build
+      - deploy:
+          requires:
+            - build
