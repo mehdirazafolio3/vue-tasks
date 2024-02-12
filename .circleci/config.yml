@@ -32,7 +32,7 @@ jobs:
       - run:
           name: Upload dist folder
           command: |
-            ls # Check if dist folder exists and has necessary files
+            ls ./dist  # Check if dist folder exists and has necessary files
 
 workflows:
   build-and-deploy:
