@@ -32,7 +32,7 @@ jobs:
       - run:
           name: Upload dist folder
           command: |
-            scp -r $SSH_USER@$SSH_HOST:~/demoCI ~/dist 
+            scp -r ./dist $SSH_USER@$SSH_HOST:/demoCI  
           when: always  # Continue even if ls or scp fails
 
 workflows:
