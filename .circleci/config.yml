@@ -14,7 +14,8 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - dist
+            - .
+
   deploy:
     docker:
       - image: cimg/base:2021.04
@@ -30,7 +31,10 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST ls
       - run:
           name: Upload dist folder
-          command: scp -r ~/dist $SSH_USER@$SSH_HOST:~/demoCI      
+          command: |
+            ls -l ~/dist  # Check if dist folder exists and has necessary files
+            scp -r ~/dist $SSH_USER@$SSH_HOST:~/demoCI
+          when: always  # Continue even if ls or scp fails
 
 workflows:
   build-and-deploy:
