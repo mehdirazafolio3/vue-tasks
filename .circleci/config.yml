@@ -12,7 +12,7 @@ jobs:
       - run:
           name: Test SSH Connection
           command: |
-            ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa mehdiraza@mehdi.smartorg.com exit
+            ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa mehdiraza@mehdi.smartorg.com ls
 workflows:
   build-and-deploy:
     jobs:
