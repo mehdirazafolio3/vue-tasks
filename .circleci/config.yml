@@ -10,9 +10,15 @@ jobs:
           fingerprints:
             - "$SSH_FINGERPRINT"
       - run:
-          name: ssh
+          name: Check SSH Connection
           command: |
-            ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST 'ls'
+            ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST exit
+            if [ $? -eq 0 ]; then
+              echo "SSH connection successful"
+            else
+              echo "SSH connection failed"
+              exit 1
+            fi
 workflows:
   build-and-deploy:
     jobs:
