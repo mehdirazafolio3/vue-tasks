@@ -11,7 +11,8 @@ jobs:
             - "$SSH_FINGERPRINT"
       - run:
           name: ssh
-          command: ls
+          command: |
+            ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST 'ls'
 workflows:
   build-and-deploy:
     jobs:
