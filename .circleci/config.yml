@@ -33,8 +33,6 @@ jobs:
           name: Upload dist folder
           command: |
             ls -l ~/dist  # Check if dist folder exists and has necessary files
-            scp -r ~/dist $SSH_USER@$SSH_HOST:~/demoCI
-          when: always  # Continue even if ls or scp fails
 
 workflows:
   build-and-deploy:
