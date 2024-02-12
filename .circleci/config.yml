@@ -10,15 +10,9 @@ jobs:
           fingerprints:
             - "$SSH_FINGERPRINT"
       - run:
-          name: Check SSH Connection
+          name: Test SSH Connection
           command: |
-            ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST exit
-            if [ $? -eq 0 ]; then
-              echo "SSH connection successful"
-            else
-              echo "SSH connection failed"
-              exit 1
-            fi
+            ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa mehdiraza@mehdi.smartorg.com exit
 workflows:
   build-and-deploy:
     jobs:
